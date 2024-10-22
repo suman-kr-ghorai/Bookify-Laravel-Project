@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .seat-label {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .seat-icon {
+        width: 30px;
+        height: 30px;
+        color: #d1d5db; /* Gray for unselected seats */
+        transition: color 0.3s ease;
+    }
+
+    /* Selected Seat */
+    .seat-checkbox:checked + .seat-label .seat-icon {
+        color: #3b82f6; /* Blue for selected seats */
+    }
+
+    /* Occupied Seat (disabled) */
+    .seat-checkbox:disabled + .seat-label .seat-icon {
+        color: #9ca3af; /* Gray for occupied seats */
+    }
+
+    /* Hover Effect for Available Seats */
+    .seat-checkbox:not(:checked):not(:disabled) + .seat-label:hover .seat-icon {
+        color: #34d399; /* Green on hover for available seats */
+    }
+}
