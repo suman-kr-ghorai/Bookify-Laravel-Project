@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\RegisterBusController;
 use App\Http\Controllers\SeatController;
+use App\Http\Controllers\BookingController;
 
 
 
@@ -69,3 +70,11 @@ Route::get('/buses', [BusController::class, 'getBuses']);
 
 Route::post('/register-buses', [RegisterBusController::class, 'registerBuses']);
 //registering new bus with form 
+
+
+
+
+
+
+
+Route::post('/book-seats', [BookingController::class, 'bookSeats'])->name('book.seats');
