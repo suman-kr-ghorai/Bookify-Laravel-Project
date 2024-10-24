@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 
 class BusController extends Controller
@@ -40,51 +41,69 @@ class BusController extends Controller
     }
 
 
-function busStore(Request $request ){
+    
 
-    //return $req;
 
+function busStore(Request $request)
+{
     // Assuming the bus_id is either passed or available in session
-    $bus_id = 2; // Replace with actual bus_id
+    $bus_id = $request->session()->get('bus_id'); // Get the bus_id from the session
 
     $rows = $request->input('rows');           // Number of rows
     $columns = $request->input('columns');     // Number of columns per row
     $seats = $request->input('seats');         // Seat number information
 
-    for ($i = 1; $i <= $rows; $i++) {
-        $numberOfColumns = $columns[$i];       // Get the number of columns for this row
+    try {
 
-        for ($j = 1; $j <= $numberOfColumns; $j++) {
-            $seatNumber = isset($seats[$i][$j]) ? $seats[$i][$j] : 0; // Get the seat number, or 0 if it's a gap
-            $is_gap = ($seatNumber == 0) ? 1 : 0; // If seat number is 0, it's a gap
+        if ($rows && $columns && $bus_id) {
+            for ($i = 1; $i <= $rows; $i++) {
+                $numberOfColumns = $columns[$i]; // Get the number of columns for this row
 
-            // Insert data into the table
-            DB::table('seats')->insert([
-                'bus_id'      => $bus_id,
-                'row'         => $i,                         // Row number
-                'columns'     => $j,           // Number of columns in the row
-                'seat_number' => $seatNumber,                // Seat number or 0 for gap
-                'is_occupied' => 0,                          // Default to not occupied
-                'is_gap'      => $is_gap,                    // 1 if it's a gap
-                // 'type'        => ($i == 1) ? 'driver_side' : 'passenger',  // Example logic, you can adjust this
-            ]);
+                for ($j = 1; $j <= $numberOfColumns; $j++) {
+                    $seatNumber = isset($seats[$i][$j]) ? $seats[$i][$j] : 0; // Get the seat number, or 0 if it's a gap
+                    $is_gap = ($seatNumber == 0) ? 1 : 0; // If seat number is 0, it's a gap
+
+                    // Insert data into the table
+                    DB::table('seats')->insert([
+                        'bus_id'      => $bus_id,
+                        'row'         => $i,                       // Row number
+                        'columns'     => $j,                       // Number of columns in the row
+                        'seat_number' => $seatNumber,              // Seat number or 0 for gap
+                        'is_gap'      => $is_gap,                  // 1 if it's a gap
+                    ]);
+                }
+            }
+            $request->session()->forget('bus_id');
+        $message = 'Bus seat configuration saved successfully!';
         }
+        else{
+            $message = 'Bus seat configuration could not be saved!';
+        }
+
+
+    } catch (Exception $e) {
+      
+        $message = 'An error occurred while saving bus seat configuration. Please try again.';
     }
 
-    return response()->json(['message' => 'Bus seat configuration saved successfully!'], 200);
+    // Return to the message view with the appropriate message
+    return view('message', ['message' => $message]);
 }
 
+    
 
-function add_buses(Request $request){               //to let only admin acess this page
-     // Check if user is admin
-     if ($request->session()->get('user_type')==='admin') {
-        // If user is logged in, redirect them to the home page
-        return view('/add_buses');
+
+function add_buses(Request $request) {
+    // Check if user is admin
+    if ($request->session()->get('user_type') === 'admin') {
+       
+
+        // Pass the seat layout array to the view
+        return view('add_buses');
     }
 
     // If not admin, show the homepage
     return view('home'); 
-
 }
     
 }

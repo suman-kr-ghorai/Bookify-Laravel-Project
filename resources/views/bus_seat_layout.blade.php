@@ -26,7 +26,7 @@
                                 id="seat-{{ $seat->seat_number }}" 
                                 value="{{ $seat->seat_number }}" 
                                 class="hidden seat-checkbox"
-                                {{ $seat->is_occupied ? 'disabled' : '' }}
+                                {{ in_array($seat->seat_number, $seatNumbers) ? 'disabled' : '' }}
                             >
 
                             <label for="seat-{{ $seat->seat_number }}" class="seat-label block relative">
@@ -49,51 +49,69 @@
     </button>
 </div>
 
+<!-- Confirmation Modal -->
+<div id="confirmation-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+        <h2 class="text-xl font-semibold mb-4">Confirm Your Booking</h2>
+        <p>Are you sure you want to book the selected seats?</p>
+        <div class="flex justify-end mt-4">
+            <button id="cancel-button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+            <button id="confirm-button" class="bg-blue-500 text-white px-4 py-2 rounded">Yes</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Include the date as a hidden input or a JavaScript variable -->
+<input type="hidden" id="selected-date" value="{{ $date }}" />
+
 <!-- JavaScript to handle booking -->
 <script>
-    document.getElementById('book-seats').addEventListener('click', function() {
-        const selectedSeats = [];
-        const checkboxes = document.querySelectorAll('.seat-checkbox:checked');
+document.getElementById('book-seats').addEventListener('click', function() {
+    const selectedSeats = [];
+    const checkboxes = document.querySelectorAll('.seat-checkbox:checked');
 
-        checkboxes.forEach(checkbox => {
-            selectedSeats.push(checkbox.value);
-        });
-
-        if (selectedSeats.length > 0) {
-            const totalPrice = selectedSeats.length * 10; // Assuming a price of 10 per seat
-            const payload = {
-                seats: selectedSeats,
-                total_price: totalPrice
-            };
-
-            // Make an AJAX request to book seats
-            fetch('/book-seats', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.json())
-            .then(data => {
-    console.log(data); // Log the response to see its structure
-    if (data.ticket_numbers) {
-        alert(`Seats booked successfully! Ticket Numbers: ${data.ticket_numbers.join(', ')}`);
-    } else {
-        alert('No ticket numbers returned. Please check the server response.');
-    }
-    location.reload(); // Refresh the page to update seat status
-                })
-
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error booking the seats.');
-            });
-        } else {
-            alert('Please select at least one seat.');
-        }
+    checkboxes.forEach(checkbox => {
+        selectedSeats.push(checkbox.value);
     });
+
+    if (selectedSeats.length > 0) {
+        // Show the confirmation modal
+        document.getElementById('confirmation-modal').classList.remove('hidden');
+    } else {
+        alert('Please select at least one seat.');
+    }
+});
+
+document.getElementById('cancel-button').addEventListener('click', function() {
+    document.getElementById('confirmation-modal').classList.add('hidden');
+});
+
+document.getElementById('confirm-button').addEventListener('click', function() {
+    const selectedSeats = [];
+    const checkboxes = document.querySelectorAll('.seat-checkbox:checked');
+    const selectedDate = document.getElementById('selected-date').value; // Get the date from the hidden field
+
+    checkboxes.forEach(checkbox => {
+        selectedSeats.push(checkbox.value);
+    });
+
+    // Get the busId from the current URL using JavaScript (assuming it's in the URL as /bus/{busId})
+    const currentUrl = window.location.href;
+    const busId = currentUrl.split('/bus/')[1].split('?')[0]; // Extract the busId from the URL
+
+    // Redirect to the confirm-tickets route with busId, selected seats, and date
+    if (selectedSeats.length > 0) {
+        const seatsParam = encodeURIComponent(JSON.stringify(selectedSeats));
+        const dateParam = encodeURIComponent(selectedDate);
+        const busIdParam = encodeURIComponent(busId); // Include the busId
+
+        window.location.href = `/confirm-tickets?busId=${busIdParam}&seats=${seatsParam}&date=${dateParam}`;
+    } else {
+        alert('Please select at least one seat.');
+    }
+});
 </script>
+
 
 <x-footer/>

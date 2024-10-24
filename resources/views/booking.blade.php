@@ -37,17 +37,7 @@
         </div>
 
         <!-- Date Input -->
-        <div class="flex items-center space-x-2">
-            <span class="flex items-center justify-center h-8 w-8 bg-blue-100 rounded-full">
-                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v2m4-2v2m4-2v2M3 9h18M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-            </span>
-            <div>
-                <label for="date" class="text-sm text-gray-500">Date</label>
-                <input type="date" id="date" name="date" value="2024-10-20" class="border-0 bg-transparent text-lg font-medium focus:outline-none" >
-            </div>
-        </div>
+       
 
         <!-- Search Button -->
         <button type="submit" class="bg-green-500 text-white font-bold py-2 px-6 rounded-full">
@@ -72,7 +62,7 @@
 
     const from = document.getElementById('from').value.toLowerCase(); // Convert to lowercase
     const to = document.getElementById('to').value.toLowerCase(); // Convert to lowercase
-    const date = document.getElementById('date').value;
+    // const date = document.getElementById('date').value;
 
     // Make the API call
     fetch('http://127.0.0.1:8000/buses', {

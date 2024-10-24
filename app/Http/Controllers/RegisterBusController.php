@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -33,12 +32,9 @@ class RegisterBusController extends Controller
             if ($request->hasFile('photo')) {
                 $photoPath = $request->file('photo')->store('photos', 'public');
             }
-            // else{
-            //     $photoPath=$request->input('photo');
-            // }
 
             // Insert bus data into the database
-            DB::table('bus')->insert([
+            $busId = DB::table('bus')->insertGetId([  // Use insertGetId to get the inserted ID
                 'name' => $request->input('name'),
                 'phone' => $request->input('phone'),
                 'source' => $request->input('source'),
@@ -53,14 +49,17 @@ class RegisterBusController extends Controller
                 'capacity' => $request->input('capacity'),
             ]);
 
-            return response()->json(['message' => 'Bus Added'], 200);
+            $request->session()->put('bus_id', $busId);//add bus id into session variable
+
+            // Redirect to the /seats route for creating layout
+            return redirect()->to('/seat');
+
         } catch (Exception $e) {
             // Log the error for debugging
             Log::error('Bus registration error: ' . $e->getMessage());
         
             // Return error response with the actual exception message for testing (remove in production)
-            return response()->json(['message' => 'An error occurred during registration. Details: ' . $e->getMessage()], 500);
+            return redirect()->to('/add_buses')->withErrors(['message' => 'An error occurred during registration.']);
         }
-        
     }
 }

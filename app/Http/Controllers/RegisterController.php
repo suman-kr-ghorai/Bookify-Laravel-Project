@@ -28,13 +28,14 @@ class RegisterController extends Controller
                 "phone" => $req->phone,
                 "password" => Hash::make($req->password),  // Hash the password for security
                 "DOB" => $req->dob,
-                "user-type" => "user",
-                "ticket-id" => "",
+                "user_type" => "user",
+                "ticket_id" => "",
             ]);
 
             if ($result) {
                 // Success response
-                return response()->json(['message' => 'New user created successfully'], 201);
+                // return response()->json(['message' => 'New user created successfully'], 201);
+                return view('login');
             } else {
                 // In case insertion failed
                 return response()->json(['message' => 'User registration failed. Please try again.'], 500);
@@ -45,7 +46,7 @@ class RegisterController extends Controller
             Log::error('User registration error: ' . $e->getMessage());
 
             // Return error response with exception message
-            return response()->json(['message' => 'An error occurred during registration. Please try again later.'], 500);
+            return response()->json(['message' => 'An error occurred during registration. Please try again later.'.$e->getMessage()], 500);
         }
     }
 }

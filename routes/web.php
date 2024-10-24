@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterBusController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\TicketController;
 
 
 
@@ -86,3 +87,11 @@ Route::post('/register-buses', [RegisterBusController::class, 'registerBuses']);
 
 
 Route::post('/book-seats', [BookingController::class, 'bookSeats'])->name('book.seats');
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+//                       TICKET NO GENERATION AND SEAT BOOKING CONFIRMATION
+////////////////////////////////////////////////////////////////////////
+Route::get('confirm-tickets',[TicketController::class,'ticket_book']);
