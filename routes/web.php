@@ -94,4 +94,6 @@ Route::post('/book-seats', [BookingController::class, 'bookSeats'])->name('book.
 ///////////////////////////////////////////////////////////////////////
 //                       TICKET NO GENERATION AND SEAT BOOKING CONFIRMATION
 ////////////////////////////////////////////////////////////////////////
+
 Route::get('confirm-tickets',[TicketController::class,'ticket_book']);
+Route::get('ticket-payment',[TicketController::class,'payment']);

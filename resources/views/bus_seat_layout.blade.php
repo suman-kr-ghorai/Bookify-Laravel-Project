@@ -75,12 +75,25 @@ document.getElementById('book-seats').addEventListener('click', function() {
         selectedSeats.push(checkbox.value);
     });
 
-    if (selectedSeats.length > 0) {
+    if (selectedSeats.length > 6) {
+        alert('You cannot select more than 6 seats.');
+    } else if (selectedSeats.length > 0 ) {
         // Show the confirmation modal
         document.getElementById('confirmation-modal').classList.remove('hidden');
     } else {
         alert('Please select at least one seat.');
     }
+});
+
+document.querySelectorAll('.seat-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const selectedSeats = document.querySelectorAll('.seat-checkbox:checked');
+
+        if (selectedSeats.length > 6) {
+            alert('You cannot select more than 6 seats.');
+            this.checked = false; // Uncheck the current checkbox
+        }
+    });
 });
 
 document.getElementById('cancel-button').addEventListener('click', function() {
@@ -101,12 +114,12 @@ document.getElementById('confirm-button').addEventListener('click', function() {
     const busId = currentUrl.split('/bus/')[1].split('?')[0]; // Extract the busId from the URL
 
     // Redirect to the confirm-tickets route with busId, selected seats, and date
-    if (selectedSeats.length > 0) {
+    if (selectedSeats.length > 0 && selectedSeats.length <= 6) {
         const seatsParam = encodeURIComponent(JSON.stringify(selectedSeats));
         const dateParam = encodeURIComponent(selectedDate);
         const busIdParam = encodeURIComponent(busId); // Include the busId
 
-        window.location.href = `/confirm-tickets?busId=${busIdParam}&seats=${seatsParam}&date=${dateParam}`;
+        window.location.href = `/ticket-payment?busId=${busIdParam}&seats=${seatsParam}&date=${dateParam}`;
     } else {
         alert('Please select at least one seat.');
     }
