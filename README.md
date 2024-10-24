@@ -68,3 +68,5 @@ php artisan migrate
 npm run dev
 php artisan serve
 ```
+
+## Also a sample databse is attached.Import it to your mysql database and run the project 
