@@ -1,7 +1,18 @@
 @vite('resources/css/app.css')
-{{-- dd($seats); --}}
- <x-header/>
- <div class="container mx-auto flex justify-center items-center min-h-screen">
+<x-header/>
+
+<div class="container mx-auto flex flex-col items-center min-h-screen">
+    {{-- Display Bus Details --}}
+    <div class="bus-details bg-gray-100 p-4 rounded-lg shadow-md mb-4 w-full max-w-3xl" id="bus-details">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Bus Details</h2>
+        <p><strong>Bus Name:</strong> <span>{{ $bus->name ?? 'N/A' }}</span></p>
+        <p><strong>From:</strong> <span>{{ $bus->source ?? 'N/A' }}</span></p>
+        <p><strong>To:</strong> <span>{{ $bus->destination ?? 'N/A' }}</span></p>
+        <p><strong>Departure Time:</strong> <span>{{ $bus->time ?? 'N/A' }}</span></p>
+        <p><strong>Price per Seat:</strong> ₹<span>{{ $bus->price ?? 'N/A' }}</span></p>
+        <p><strong>Total Seats:</strong> <span>{{ $bus->capacity }}</span></p>
+    </div>
+
     <div class="bus-layout max-w-3xl">
         @foreach($seats->groupBy('row') as $row)
             <div class="seat-row flex">
@@ -18,13 +29,11 @@
                                 {{ $seat->is_occupied ? 'disabled' : '' }}
                             >
 
-
                             <label for="seat-{{ $seat->seat_number }}" class="seat-label block relative">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="seat-icon w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v12h14V3m-7 12v5m4-2H7"/>
                                 </svg>
                             </label>
-                        
                         </div>
                     @endif
                 @endforeach
@@ -86,6 +95,5 @@
         }
     });
 </script>
-
 
 <x-footer/>

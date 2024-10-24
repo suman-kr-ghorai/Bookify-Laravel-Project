@@ -45,7 +45,7 @@ function busStore(Request $request ){
     //return $req;
 
     // Assuming the bus_id is either passed or available in session
-    $bus_id = 1; // Replace with actual bus_id
+    $bus_id = 2; // Replace with actual bus_id
 
     $rows = $request->input('rows');           // Number of rows
     $columns = $request->input('columns');     // Number of columns per row
@@ -66,12 +66,25 @@ function busStore(Request $request ){
                 'seat_number' => $seatNumber,                // Seat number or 0 for gap
                 'is_occupied' => 0,                          // Default to not occupied
                 'is_gap'      => $is_gap,                    // 1 if it's a gap
-                'type'        => ($i == 1) ? 'driver_side' : 'passenger',  // Example logic, you can adjust this
+                // 'type'        => ($i == 1) ? 'driver_side' : 'passenger',  // Example logic, you can adjust this
             ]);
         }
     }
 
     return response()->json(['message' => 'Bus seat configuration saved successfully!'], 200);
+}
+
+
+function add_buses(Request $request){               //to let only admin acess this page
+     // Check if user is admin
+     if ($request->session()->get('user_type')==='admin') {
+        // If user is logged in, redirect them to the home page
+        return view('/add_buses');
+    }
+
+    // If not admin, show the homepage
+    return view('home'); 
+
 }
     
 }

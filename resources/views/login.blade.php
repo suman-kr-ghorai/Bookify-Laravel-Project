@@ -38,17 +38,23 @@
                     </div>
                 </div>
 
-                <div class="mt-6 flex items-center justify-between">
+                <div class="mt-2 flex items-center justify-between">
                     {{-- <div class="flex items-center">
                         <input id="remember_me" name="remember" type="checkbox" value="1" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
                         <label for="remember_me" class="ml-2 block text-sm leading-5 text-gray-900">Remember me</label>
                     </div> --}}
 
                     <div class="text-sm leading-5">
-                        {{-- <a href="#"
+                        <a href="#"
                             class="font-medium text-blue-500 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                            Forgot your password?
-                        </a> --}}
+                            Forgot password?                        
+                        </a>
+                        <br>
+                            <a href="#"
+                            class="font-medium text-blue-500 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                            Change your password
+
+                        </a>
                     </div>
                 </div>
 
