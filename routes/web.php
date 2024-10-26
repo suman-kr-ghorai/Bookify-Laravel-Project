@@ -10,6 +10,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\AdminController;
 
 
 
@@ -107,3 +108,15 @@ Route::get('ticket-payment',[TicketController::class,'payment']);
 //                       TICKET DETAILS SHOWING
 ////////////////////////////////////////////////////////////////////////
 Route::get('my-tickets',[ShowController::class,('showTicketDetails')]);
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+//                       
+//                           ADMIN LINKS ONLY
+//                       
+////////////////////////////////////////////////////////////////////////
+Route::get('all-tickets',[AdminController::class,'showTickets']);

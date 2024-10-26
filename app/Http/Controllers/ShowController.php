@@ -23,6 +23,7 @@ class ShowController extends Controller
             // Check if user records exist
             if (!$userRecords) {
                 return back()->withErrors(['error' => 'User not found.']);
+                
             }
 
             // Extract transaction IDs from the user record
@@ -34,12 +35,14 @@ class ShowController extends Controller
             // Query the cart table to get details for each transaction ID
             $tickets = DB::table('cart')
                 ->whereIn('id', $allIds) // Use the correct column for the transaction ID
-                ->select('bus_id', 'price', 'date','ticket_number')
+                ->select('bus_id', 'price', 'date','ticket_number','seat_numbers')
                 ->get();
 
            // Check if tickets were found
             if ($tickets->isEmpty()) {
-                return back()->withErrors(['error' => 'No tickets found for the given transaction IDs.']);
+                $ticket=[];
+                // return back()->withErrors(['error' => 'No tickets found for the given transaction IDs.']);
+                return view('ticket-details',['tickets' => $ticket]);
             }
 
             // Initialize an array to hold bus details

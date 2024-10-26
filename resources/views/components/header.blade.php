@@ -30,9 +30,9 @@
             <a href="#aboutus" class="flex items-center justify-center w-full px-4 py-4 text-xl font-bold capitalize duration-100 transform border-2 rounded-xl cursor-pointer focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none sm:w-auto sm:px-6 border-text hover:shadow-lg hover:-translate-y-1">
                 <i class="fas fa-info-circle mr-2"></i> About Us
             </a>
-            <a href="#visitUs" class="flex items-center justify-center w-full px-4 py-4 text-xl font-bold capitalize duration-100 transform border-2 cursor-pointer focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none sm:w-auto sm:px-6 border-text hover:shadow-lg hover:-translate-y-1 rounded-xl">
+            {{-- <a href="#visitUs" class="flex items-center justify-center w-full px-4 py-4 text-xl font-bold capitalize duration-100 transform border-2 cursor-pointer focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none sm:w-auto sm:px-6 border-text hover:shadow-lg hover:-translate-y-1 rounded-xl">
                 <i class="fas fa-shopping-cart mr-2"></i> My Cart
-            </a>
+            </a> --}}
         @endif
 
         <!-- Admin-Only Links -->
@@ -40,7 +40,7 @@
             <a href="/add_buses" class="flex items-center justify-center w-full px-4 py-4 text-xl font-bold capitalize duration-100 transform border-2 cursor-pointer focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none sm:w-auto sm:px-6 border-text hover:shadow-lg hover:-translate-y-1 rounded-xl">
                 <i class="fas fa-plus-circle mr-2"></i> Add Buses
             </a>
-            <a href="/tickets" class="flex items-center justify-center w-full px-4 py-4 text-xl font-bold capitalize duration-100 transform border-2 cursor-pointer focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none sm:w-auto sm:px-6 border-text hover:shadow-lg hover:-translate-y-1 rounded-xl">
+            <a href="/all-tickets" class="flex items-center justify-center w-full px-4 py-4 text-xl font-bold capitalize duration-100 transform border-2 cursor-pointer focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none sm:w-auto sm:px-6 border-text hover:shadow-lg hover:-translate-y-1 rounded-xl">
                 <i class="fas fa-ticket-alt mr-2"></i> All Tickets
             </a>
         @endif
