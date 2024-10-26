@@ -2,47 +2,45 @@
 
 <x-header/>
 
-<div class="bg-blue-400 p-20 rounded-md">
+<div class="bg-gray-100 p-10 rounded-md">
     <form id="searchForm" method="POST" class="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
         @csrf
         <!-- From Input -->
         <div class="flex items-center space-x-2">
             <span class="flex items-center justify-center h-8 w-8 bg-blue-100 rounded-full">
-                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0h.01m4 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <img src="https://img.icons8.com/ios-filled/50/000000/marker.png" class="w-5 h-5" alt="From Icon">
             </span>
             <div>
-                <label for="from" class="text-sm text-blue-500">From</label>
-                <input type="text" id="from" name="from"  class="sm:rounded-lg border-solid text-lg text-gray-600 font-medium focus:outline-none border-cyan-200" >
+                <label for="from" class="text-xl text-blue-500">From</label>
+                <input type="text" id="from" name="from" class="sm:rounded-lg border-solid text-lg text-gray-600 font-medium focus:outline-none border-cyan-200">
             </div>
         </div>
 
         <!-- Swap Icon -->
         <div class="flex items-center cursor-pointer" onclick="swapInputs()">
-            <img src="https://cdn-icons-png.flaticon.com/512/565/565619.png" class="w-6 h-6 text-gray-500" alt="">
+            <img src="https://cdn-icons-png.flaticon.com/512/565/565619.png" class="w-6 h-6 text-gray-500" alt="Swap Icon">
         </div>
 
         <!-- To Input -->
         <div class="flex items-center space-x-2">
             <span class="flex items-center justify-center h-8 w-8 bg-blue-100 rounded-full">
-                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0h.01m4 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <img src="https://img.icons8.com/ios-filled/50/000000/marker.png" class="w-5 h-5" alt="To Icon">
             </span>
             <div>
-                <label for="to" class="text-sm text-blue-500">To</label>
-                <input type="text" id="to" name="to"  class="border-0 bg-transparent text-lg font-medium text-gray-600 focus:outline-none" >
+                <label for="to" class="text-xl text-blue-500">To</label>
+                <input type="text" id="to" name="to" class="border-0 bg-transparent text-lg font-medium text-gray-600 focus:outline-none">
             </div>
         </div>
 
-        <!-- Date Input -->
-       
-
-        <!-- Search Button -->
-        <button type="submit" class="bg-green-500 text-white font-bold py-2 px-6 rounded-full">
-            SEARCH BUSES
-        </button>
+                       <!-- Search Button -->
+                       <button type="submit" class="bg-blue-400 text-white hover:bg-green-500 font-bold py-3 px-9 rounded-full flex items-center">
+                        <i class="fas fa-search mr-2"></i> SEARCH BUSES
+                    </button>
+                    
+                    <!-- Show All Button -->
+                    <button type="button" id="searchAll" class="bg-blue-400 text-white font-bold hover:bg-orange-500 py-3 px-9 rounded-full flex items-center">
+                        <i class="fas fa-list mr-2"></i> SHOW ALL AVAILABLE BUSES
+                    </button>
     </form>
 </div>
 
@@ -58,47 +56,64 @@
     }
 
     document.getElementById('searchForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); // Prevent the default form submission
 
-    const from = document.getElementById('from').value.toLowerCase(); // Convert to lowercase
-    const to = document.getElementById('to').value.toLowerCase(); // Convert to lowercase
-    // const date = document.getElementById('date').value;
+        const from = document.getElementById('from').value.toLowerCase(); // Convert to lowercase
+        const to = document.getElementById('to').value.toLowerCase(); // Convert to lowercase
 
-    // Make the API call
-    fetch('http://127.0.0.1:8000/buses', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Check if either 'from' or 'to' has a value
-        if (from || to) {
-            // Filter the data based on the inputs
-            const filteredBuses = data.filter(bus => {
-                const matchesFrom = from ? bus.source.toLowerCase() === from : true; // Only filter by 'from' if provided
-                const matchesTo = to ? bus.destination.toLowerCase() === to : true; // Only filter by 'to' if provided
-                return matchesFrom && matchesTo;
-            });
+        // Make the API call
+        fetch('http://127.0.0.1:8000/buses', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check if either 'from' or 'to' has a value
+            if (from || to) {
+                // Filter the data based on the inputs
+                const filteredBuses = data.filter(bus => {
+                    const matchesFrom = from ? bus.source.toLowerCase() === from : true;
+                    const matchesTo = to ? bus.destination.toLowerCase() === to : true;
+                    return matchesFrom && matchesTo;
+                });
 
-            // Redirect to the search results page with the filtered data
-            const searchResultsUrl = '/search'; // URL of the search results page
-            const queryString = new URLSearchParams({ results: JSON.stringify(filteredBuses) }).toString();
-            window.location.href = `${searchResultsUrl}?${queryString}`;
-        } else {
-            // Both fields are empty, forward the full response
+                // Redirect to the search results page with the filtered data
+                const searchResultsUrl = '/search'; // URL of the search results page
+                const queryString = new URLSearchParams({ results: JSON.stringify(filteredBuses) }).toString();
+                window.location.href = `${searchResultsUrl}?${queryString}`;
+            } else {
+                // Both fields are empty, forward the full response
+                const searchResultsUrl = '/search'; // URL of the search results page
+                const queryString = new URLSearchParams({ results: JSON.stringify(data) }).toString();
+                window.location.href = `${searchResultsUrl}?${queryString}`;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching buses:', error);
+        });
+    });
+
+    document.getElementById('searchAll').addEventListener('click', function(event) {
+        // Make the API call
+        fetch('http://127.0.0.1:8000/buses', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Forward the full response
             const searchResultsUrl = '/search'; // URL of the search results page
             const queryString = new URLSearchParams({ results: JSON.stringify(data) }).toString();
             window.location.href = `${searchResultsUrl}?${queryString}`;
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching buses:', error);
+        })
+        .catch(error => {
+            console.error('Error fetching buses:', error);
+        });
     });
-});
-
-
 </script>
 
 {{-- CARDS FOR OFFER --}}
@@ -107,7 +122,10 @@
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Offers</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-white rounded-lg bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg overflow-hidden min-h-xl">
-                <div class="text-center text-white font-medium">Cashback</div>
+                <div class="text-center text-white font-medium flex items-center justify-center">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/cash-in-hand.png" class="mr-2" alt="Cashback Icon">
+                    Cashback
+                </div>
                 <img src="https://png.pngtree.com/png-vector/20220614/ourmid/pngtree-emblem-cash-back-cashback-sign-png-image_5068697.png" alt="Cashback" class="w-full h-64 object-cover rounded-t-lg">
                 <div class="p-6 bg-white text-center rounded-b-lg md:min-h-xl">
                     <h3 class="text-xl font-medium text-gray-800 mb-2">USE CODE: BCARD40</h3>
@@ -116,7 +134,10 @@
             </div>
 
             <div class="bg-white rounded-lg bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg overflow-hidden min-h-xl">
-                <div class="text-center text-white font-medium">Special DISCOUNT</div>
+                <div class="text-center text-white font-medium flex items-center justify-center">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/discount.png" class="mr-2" alt="Discount Icon">
+                    Special DISCOUNT
+                </div>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsq9CEky9qRVshieJRpsCEtaeZsUZdUq-bmA&s" alt="Special Discount" class="w-full h-64 object-cover rounded-t-lg">
                 <div class="p-6 bg-white text-center rounded-b-lg md:min-h-xl">
                     <h3 class="text-xl font-medium text-gray-800 mb-2">USE CODE: B40</h3>
@@ -124,7 +145,10 @@
             </div>
 
             <div class="bg-white rounded-lg bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg overflow-hidden min-h-xl">
-                <div class="text-center text-white font-medium">WIN PRIZES</div>
+                <div class="text-center text-white font-medium flex items-center justify-center">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/trophy.png" class="mr-2" alt="Prizes Icon">
+                    WIN PRIZES
+                </div>
                 <img src="https://img.freepik.com/free-vector/win-prizes-gifts-promotional-golden-background_1017-40332.jpg?semt=ais_hybrid" alt="Win Prizes" class="w-full h-64 object-cover rounded-t-lg">
                 <div class="p-6 bg-white text-center rounded-b-lg md:min-h-xl">
                     <h3 class="text-xl font-medium text-gray-800 mb-2">USE CODE: BPRIZE</h3>

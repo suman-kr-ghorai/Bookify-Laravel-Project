@@ -9,6 +9,8 @@ use App\Http\Controllers\SeatController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ShowController;
+
 
 
 
@@ -97,3 +99,11 @@ Route::post('/book-seats', [BookingController::class, 'bookSeats'])->name('book.
 
 Route::get('confirm-tickets',[TicketController::class,'ticket_book']);
 Route::get('ticket-payment',[TicketController::class,'payment']);
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+//                       TICKET DETAILS SHOWING
+////////////////////////////////////////////////////////////////////////
+Route::get('my-tickets',[ShowController::class,('showTicketDetails')]);

@@ -11,26 +11,41 @@
         align-items: center;
         cursor: pointer;
     }
-
-    .seat-icon {
+    .demo-available{
         width: 30px;
         height: 30px;
-        color: #d1d5db; /* Gray for unselected seats */
+        color:  #64ea95; /* Gray for unselected seats */
         transition: color 0.3s ease;
     }
+    .demo-booked{
+        color:gray; /* Gray for occupied seats */
+    
+     }
+     .demo-selected{
+        color: #0d67f9; /* Blue for selected seats */
+    }
 
+
+
+
+    .seat-icon  {
+        width: 30px;
+        height: 30px;
+        color:  #64ea95; /* Gray for unselected seats */
+        transition: color 0.3s ease;
+    }
     /* Selected Seat */
     .seat-checkbox:checked + .seat-label .seat-icon {
-        color: #3b82f6; /* Blue for selected seats */
+        color: #0d67f9; /* Blue for selected seats */
     }
 
     /* Occupied Seat (disabled) */
-    .seat-checkbox:disabled + .seat-label .seat-icon {
-        color: #9ca3af; /* Gray for occupied seats */
+    .seat-checkbox:disabled + .seat-label .seat-icon  {
+        color:gray; /* Gray for occupied seats */
     }
-
+     
     /* Hover Effect for Available Seats */
     .seat-checkbox:not(:checked):not(:disabled) + .seat-label:hover .seat-icon {
-        color: #34d399; /* Green on hover for available seats */
+        color:rgb(63, 152, 236) /* Green on hover for available seats */
     }
 }

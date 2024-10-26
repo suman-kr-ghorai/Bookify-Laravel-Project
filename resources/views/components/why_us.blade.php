@@ -1,49 +1,48 @@
-<section class="text-gray-700 body-font mt-10">
-    <div class="flex justify-center text-3xl font-bold text-gray-800 text-center">
-        Why Us?
+<section class="text-gray-700 body-font mt-10 bg-gradient-to-b from-gray-50 to-gray-100 py-12">
+    <div class="flex justify-center mb-8">
+        <h2 class="text-4xl font-bold text-gray-800 text-center">Why Book with Bookify?</h2>
     </div>
-    <div class="container px-5 py-12 mx-auto">
-        <div class="flex flex-wrap text-center justify-center">
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-                <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                    <div class="flex justify-center">
-                        <img src="https://image3.jdomni.in/banner/13062021/58/97/7C/E53960D1295621EFCB5B13F335_1623567851299.png?output-format=webp"
-                            class="w-32 mb-3">
-                    </div>
-                    <h2 class="title-font font-regular text-2xl text-gray-900">Latest Milling Machinery</h2>
+    
+    <div class="container mx-auto px-5">
+        <div class="flex flex-wrap justify-center gap-6">
+            <!-- Wide Network -->
+            <div class="w-full md:w-1/4 p-4">
+                <div class="bg-white shadow-lg rounded-lg p-8 transform transition duration-300 hover:scale-105 flex flex-col items-center h-full">
+                    <i class="fas fa-bus text-blue-500 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-900">Wide Network</h3>
+                    <p class="text-gray-600 mt-2 text-center">Access buses across cities and routes nationwide.</p>
                 </div>
             </div>
 
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-                <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                    <div class="flex justify-center">
-                        <img src="https://image2.jdomni.in/banner/13062021/3E/57/E8/1D6E23DD7E12571705CAC761E7_1623567977295.png?output-format=webp"
-                            class="w-32 mb-3">
-                    </div>
-                    <h2 class="title-font font-regular text-2xl text-gray-900">Reasonable Rates</h2>
+            <!-- Affordable Prices -->
+            <div class="w-full md:w-1/4 p-4">
+                <div class="bg-white shadow-lg rounded-lg p-8 transform transition duration-300 hover:scale-105 flex flex-col items-center h-full">
+                    <i class="fas fa-wallet text-green-500 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-900">Affordable Prices</h3>
+                    <p class="text-gray-600 mt-2 text-center">Competitive pricing for budget-friendly travel.</p>
                 </div>
             </div>
 
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-                <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                    <div class="flex justify-center">
-                        <img src="https://image3.jdomni.in/banner/13062021/16/7E/7E/5A9920439E52EF309F27B43EEB_1623568010437.png?output-format=webp"
-                            class="w-32 mb-3">
-                    </div>
-                    <h2 class="title-font font-regular text-2xl text-gray-900">Time Efficiency</h2>
+            <!-- Easy Booking Process -->
+            <div class="w-full md:w-1/4 p-4">
+                <div class="bg-white shadow-lg rounded-lg p-8 transform transition duration-300 hover:scale-105 flex flex-col items-center h-full">
+                    <i class="fas fa-mouse-pointer text-yellow-500 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-900">Easy Booking</h3>
+                    <p class="text-gray-600 mt-2 text-center">Quick and user-friendly booking process.</p>
                 </div>
             </div>
 
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-                <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                    <div class="flex justify-center">
-                        <img src="https://image3.jdomni.in/banner/13062021/EB/99/EE/8B46027500E987A5142ECC1CE1_1623567959360.png?output-format=webp"
-                            class="w-32 mb-3">
-                    </div>
-                    <h2 class="title-font font-regular text-2xl text-gray-900">Expertise in Industry</h2>
+            <!-- 24/7 Support -->
+            <div class="w-full md:w-1/4 p-4">
+                <div class="bg-white shadow-lg rounded-lg p-8 transform transition duration-300 hover:scale-105 flex flex-col items-center h-full">
+                    <i class="fas fa-headset text-red-500 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-900">24/7 Support</h3>
+                    <p class="text-gray-600 mt-2 text-center">Reliable assistance whenever you need it.</p>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
+
+<!-- Font Awesome Script (required for icons) -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

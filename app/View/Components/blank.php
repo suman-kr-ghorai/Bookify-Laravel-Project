@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class searchBar extends Component
+class blank extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class searchBar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.search-bar');
+        return view('components.blank');
     }
 }

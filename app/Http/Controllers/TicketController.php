@@ -75,15 +75,40 @@ class TicketController extends Controller
             // Update user tickets
             $this->updateUserTickets($userId, $ticketNumbers);
     
-            // Insert data into the cart table
-            DB::table('cart')->insert([
-                'user_id' => $userId,
-                'ticket_number' => $ticketNumbersStr, // Store as comma-separated string
-                'bus_id' => $busId,
-                'date' => $bookingDate,
-                'seat_numbers' => $seatNumbersStr, // Store as comma-separated string
-                'price' => $totalPrice,
+          // Insert the data and get the auto-incremented ID
+        $cartId = DB::table('cart')->insertGetId([
+              'user_id' => $userId,
+              'ticket_number' => $ticketNumbersStr, // Store as comma-separated string
+              'bus_id' => $busId,
+              'date' => $bookingDate,
+              'seat_numbers' => $seatNumbersStr, // Store as comma-separated string
+              'price' => $totalPrice,
             ]);
+
+
+            // Retrieve the current transaction_ids from the users table
+            $currentTransactionIds = DB::table('users')->where('id', $userId)->value('transaction_ids');
+
+            // Check if current transaction_ids is empty or null
+            if ($currentTransactionIds) {
+                // If not empty, append the new cartId with a comma
+                $updatedTransactionIds = $currentTransactionIds . ',' . $cartId;
+            } 
+            else {
+                // If empty, just use the new cartId
+                $updatedTransactionIds = $cartId;
+            }
+
+            // Update the users table with the new transaction_ids string
+            DB::table('users')->where('id', $userId)->update([
+                'transaction_ids' => $updatedTransactionIds
+            ]);
+
+
+
+
+
+
     
             // Commit the transaction
             DB::commit();
@@ -98,16 +123,23 @@ class TicketController extends Controller
     }
     
     
-
     private function generateUniqueTicketNumber()
     {
         // Generate a ticket number
         do {
-            $ticketNumber = 'T-' . strtoupper(uniqid());
+            // Get the current timestamp
+            $timestamp = time();
+            
+            // Generate a random number
+            $randomNumber = mt_rand(10, 99); // Change range for desired length
+            
+            // Combine timestamp and random number for a shorter ID
+            $ticketNumber = 'T-' . strtoupper(dechex($timestamp) . $randomNumber);
         } while (DB::table('tickets')->where('ticket_number', $ticketNumber)->exists()); // Check if it exists
-
+    
         return $ticketNumber;
     }
+    
 
     private function updateOccupiedSeats($busId, $bookingDate, $seats)
     {
