@@ -25,6 +25,25 @@ Route::view('/register','register');
 
 
 
+///////////////////////////////////////////////////////////////////////
+//                       ADMIN PAGE +LINKS
+////////////////////////////////////////////////////////////////////////
+Route::get('/admin',[AdminController::class,'alluser']);
+Route::get('/admin-all-users-show',[AdminController::class,'alluserShow']);
+// Route to show the user edit form
+Route::get('/users/edit/{id}', [AdminController::class, 'edit'])->name('users.edit');
+// Route to handle the update form submission
+Route::post('/users/update/{id}', [AdminController::class, 'update'])->name('users.update');
+// Route to delete a user
+Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
+// Route to block the user
+Route::get('/users/block/{id}', [AdminController::class, 'block'])->name('users.block');
+Route::get('/users/unblock/{id}', [AdminController::class, 'unblock'])->name('users.unblock');
+
+
+
+
+
 Route::view('/booking','booking');
 Route::view('/search','search');
 Route::view('/cart','cart-pay');
